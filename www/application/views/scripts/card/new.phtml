@@ -1,0 +1,142 @@
+    <div class="topmenu">  <?= $this->menu ?></div>
+<div id="functions">
+
+    <?= $this->content ?>
+    
+
+</div>
+    <div id="additions">
+        <div style='display:block;text-align:left;position:relative;width:300px;margin-left:-150px;left:50%;'>
+            Дополнительная информация:
+            <br>
+            <textarea id="dop" style="width:100%;"></textarea>
+        </div><br>
+          <div style='display:block;position:relative;width:300px;margin-left:-150px;left:50%;'>
+            Прикрепить файл:
+            <br>
+           	
+<form enctype="multipart/form-data">
+<input id='id_file' style='display:none;' name="file" type="file">
+<a class="btn" onclick='document.getElementById("id_file").click();'>Выбрать</a>
+</form>
+        </div>
+        <br><hr>
+        <a class="btn" onclick="alert($('#id_file').val());">Готово</a>
+    </div>
+<div id="push"></div>
+<div id="result">
+    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля.">
+  <?php echo "Инициатор:\r\n".$_SESSION['orgname']."\r\n-------------------------------------------------------------------------------------------------------\r\n".$_SESSION['fio']."\r\n".$_SESSION['post']."\r\n-------------------------------------------------------------------------------------------------------\r\n"; ?> 
+    </textarea>
+</div>
+
+
+<style>
+    #additions{
+        display:block;
+        padding:20px;
+        margin-top:50px;
+        text-align:center;
+    }
+    .topmenu a{
+        margin-left:5px;
+        margin-top:10px;
+  
+    }
+    .topmenu{
+      border:1px solid transparent;
+    }
+    .ln{
+        display:block;
+       
+        height:25px;
+        width:100%;
+        padding-left:5px;
+        border-radius: 5px;
+    }
+    .ln:hover{
+        background:url('/img/li.png');
+    }
+    ul {
+        list-style: none;
+    }
+    ul li{
+        margin-left:-20px;
+        margin-top:0px;
+        
+    }
+    ul li ul li{
+        margin-left:10px;
+    }
+    ul li ul li a{
+        display:block;
+        width:100%;
+        padding-left:5px;
+    }
+    ul li ul li a:hover{
+        background:url('/img/li_red.png');
+    }
+    #functions{
+     
+        display:block;
+      
+    }
+    #result{
+        position: fixed;
+        height:280px;
+        width:600px;
+        left:50%;
+        margin-left: -300px;
+        opacity:0.7;
+        overflow: hidden;
+         border-radius: 10px 10px 0px 0px;
+         border: 2px solid #81caf8;
+         top:100%;
+         margin-top:-320px;
+    }
+    #result textarea{
+        resize:none;
+         border-radius: 10px 10px 0px 0px;
+        width:587px;
+        min-height: 270px;
+    }   
+    #push{
+        height:300px;
+        width:100%;
+    }
+    #anamnesis{
+        margin-top:20px;
+        margin-left:40px;
+        width:300px;
+        height: 200px;
+        border-radius: 5px;
+       position:relative;
+       top:0%;
+    }
+  
+    
+</style>
+<script>
+    
+ $(document).ready(function(){
+     $('#comps').click(function(){
+         $('ul#comps').slideToggle(500); 
+     });
+     $(".ln").click(function(){
+         $(this).next().slideToggle(500); 
+     });
+      $("#anam").click(function(){
+         $("#anamnesis").slideToggle(500); 
+     });
+     $("ul li ul li a").click(function(){
+       if ($(this).attr('class')=='0'){
+           $(this).attr('class','1');
+           $(this).css('color','green');
+       }else {
+            $(this).attr('class','0');
+           $(this).css('color','');
+       }
+     })
+ })
+ 
+</script>

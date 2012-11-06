@@ -1,0 +1,121 @@
+﻿<h4><?= $this->orgname ?></h4>
+<style>
+    #popup_help{
+        position:absolute;
+        display: none;
+        opacity:0.0;
+       left:500px;
+       top:150px;
+    }
+    #popup_help #arrow{
+        width:10px;
+        height:10px;
+        background:url('/img/arrow_right.png');
+        position:relative;
+        margin-top: -40px;
+        left:100%;
+        margin-left:-2px;
+    }
+    #popup_help #cont{
+         padding:10px;
+        border-radius: 10px;
+        background:white;
+        border:2px solid #81caf8;
+    }
+    .hid li{
+        margin-top:0px;
+ 
+   height:30px;
+       list-style-image: url('/img/plus.png');
+    }
+    .hid li:hover{
+        background: url('/img/li.png');
+    }
+    .hid li a{
+        display:block;
+        width:100%;
+    }
+</style>
+
+
+
+<div class="container">
+<div class="row-fluid">
+<div class="span8">
+
+<br>
+<?php 
+/*
+for ($i=0;$i<=20;$i++){
+    echo "<br> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.";
+}
+*/
+?>   <div id="popup_help">
+      
+        <div id="cont">
+        Для начала работы с системой,<br> выберите один из разделов справа.
+        </div>
+          <div id="arrow"></div>
+    </div>
+<h5>Система <b> &laquo;Телемедицина&raquo; </b></h5>
+<br>
+Используется для:
+<ul>
+    <li>Межведомственного взаимодействия</li>
+    <li>Оперативной передачи данных о пациентах</li>
+    <li>Двустороннего принятия решения о необходимости транспортировки больного</li>
+    
+</ul>
+<p>
+    <br><br>
+   <center> <a href="#" class="btn"  onclick="$('#popup_help').stop().show().animate({'opacity':0.9},1000).animate({'opacity':1.0},3000).animate({'opacity':0.0},1000);">Как начать работу?</a>
+   </center>
+ 
+
+
+</div>
+<div class="span4">
+<p>
+    <div>
+        <a class="btn btn-primary" style="width:100%;" href="#" onclick="$(this).next().slideToggle(500);">Новая консультация</a>
+        <div class="hid" style="display:none;">
+            <ul>
+                <?php
+             
+                foreach ($this->plist as $p){
+                    echo "<li>".$p."</li>";
+                }
+                
+                ?>
+            </ul>
+        </div>
+    </div>
+<p>
+     <div>
+        <a class="btn btn-primary" style="width:100%;" href="#" onclick="$(this).next().slideToggle(500);">Отправленные</a>
+        <div class="hid" style="display:none;">
+            <ul>
+                <?php
+             
+               
+                
+                ?>
+            </ul>
+        </div>
+    </div>
+<p>
+  <div>
+        <a class="btn btn-primary" style="width:100%;" href="#" onclick="$(this).next().slideToggle(500);">Принятые</a>
+        <div class="hid" style="display:none;">
+            <ul>
+                <?php
+             
+               
+                
+                ?>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>
