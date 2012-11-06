@@ -16,11 +16,9 @@ class CardController extends Zend_Controller_Action
    if (Zend_Auth::getInstance()->hasIdentity()) {
        //Создаем меню
        $this->view->menu='';
-<<<<<<< HEAD
-       $this->view->menu .= "<a  id='comps' href=# class='btn btn-primary'>Жалобы на</a><a id='anam' class='btn btn-primary'>Анамнез</a><a id='obj' class='btn btn-primary'>Объективно</a>";
-=======
+
        $this->view->menu .= "<a id='comps' href=# class='btn btn-primary'>Жалобы на</a><a id='anam' class='btn btn-primary'>Анамнез</a><a id='obj' class='btn btn-primary'>Объективно</a>";
->>>>>>> First fiks
+
        $this->view->menu .="<a id='neuro' href=# class='btn btn-primary'>Невростатус</a><a id='local' href=# class='btn btn-primary'>Локальный статус</a>";
        $this->view->menu .="<a id='obsled' href=# class='btn btn-primary'>Обследование</a>";
        $this->view->menu .="<a id='lech' href=# class='btn btn-primary'>Лечение</a>";
@@ -68,7 +66,8 @@ class CardController extends Zend_Controller_Action
        
          $this->view->content .= "</ul><textarea style='display:none' id='anamnesis' placeholder='Анамнез в свободной форме'></textarea>"; 
        
-       
+      // Объективно:
+         
                    
       
        
