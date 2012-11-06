@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui-1.8.18.custom.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/fileuploader.js"></script>
+<link href="../css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" >
+
+    </head>
+    <body>
+        <div id="file_holder" style="text-align:center;">
+<form action="upload.php" method="post" enctype="multipart/form-data">  
+
+<p><label for="userfile">Выберите файлы для загрузки:</label>
+<input id="userfile" class="input" type="file" name="userfile" style="display:none;" /></p>
+<a class="btn" onclick="$('#userfile').click();$(this).hide();">Выбрать</a>
+<div id="loading" style="display:none;"><img src="/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>
+<div id="errormes"></div>  
+
+<br>
+<input type="submit" value="Загузить" class="btn btn-primary" />
+
+</form>
+</div>
+    </body>
+</html>

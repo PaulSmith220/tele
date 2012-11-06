@@ -1,4 +1,4 @@
-    <div class="topmenu">  <?= $this->menu ?></div>
+<div class="topmenu">  <?= $this->menu ?></div>
 <div id="functions">
 
     <?= $this->content ?>
@@ -12,26 +12,35 @@
             <textarea id="dop" style="width:100%;"></textarea>
         </div><br>
           <div style='display:block;position:relative;width:300px;margin-left:-150px;left:50%;'>
-            Прикрепить файл:
-            <br>
-           	
-<form enctype="multipart/form-data">
-<input id='id_file' style='display:none;' name="file" type="file">
-<a class="btn" onclick='document.getElementById("id_file").click();'>Выбрать</a>
-</form>
+          
+              
+            
+              <iframe id="fr" src="/frames/123.html" width="300" height="160" hspace="10" vspace="10" align="center" >
+Ваш браузер не поддерживает плавающие фреймы!
+</iframe> 
+              
+              
         </div>
         <br><hr>
         <a class="btn" id="ready">Готово</a>
     </div>
+<div id="otchet"></div>
 <div id="push"></div>
-<div id="result">
-    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." title="<?php echo "Инициатор:\r\n".$_SESSION['orgname']."\r\n-------------------------------------------------------------------------------------------------------\r\n".$_SESSION['fio']."\r\n".$_SESSION['post']."\r\n-------------------------------------------------------------------------------------------------------\r\n"; ?> ">
-  <?php echo "Инициатор:\r\n".$_SESSION['orgname']."\r\n-------------------------------------------------------------------------------------------------------\r\n".$_SESSION['fio']."\r\n".$_SESSION['post']."\r\n-------------------------------------------------------------------------------------------------------\r\n"; ?> 
+<div style="display:none;" id="result">
+    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." >
+  <?php echo "Инициатор:<p>".$_SESSION['orgname']."<p>".$_SESSION['fio']."<p>".$_SESSION['post']."<p>"; ?> 
     </textarea>
 </div>
 
 
 <style>
+    iframe{
+        border:0;
+    }
+    #loading {display:none;}
+.error {color:#900000;}
+.success {color:#009900;}
+
     #additions{
         display:block;
         padding:20px;
@@ -189,21 +198,21 @@
      });
      $("#ready").click(function(){
        res = $("#result textarea").val();
-       res += "\r\n";
+       res += "<p>";
        
         i=0;
         r = '';
         $("ul#comps a.1").each(function(){
             i++;
-            r+= '- '+$(this).html()+"\n";
+            r+= '- '+$(this).html()+"<br>";
         });
-        if (i>0) res+="Пациент поступил с жалобами на:\n"+r;
-        res += "\r\n"; 
+        if (i>0) res+="</b><b>Пациент поступил с жалобами на:</b><br>"+r;
+        res += "<p>"; 
         if ($("#anamnesis").attr('changed')=='1'){
-            res+="Анамнез:\n";
+            res+="<b>Анамнез:</b><br>";
             res+=$("#anamnesis").val();
-            res+="\n";
-             res += "\r\n"; 
+            res+="<br>";
+             res += "<p>"; 
         }
         
         
@@ -212,16 +221,24 @@
         r = '';
         $("ul#obj_ul a.1").each(function(){
             i++;
-            r+=$(this).attr('title')+': '+$(this).html()+"\n";
+            r+=$(this).attr('title')+': '+$(this).html()+"<br>";
         });
-         if (i>0) res+="Объективно: \n"+r;
-        res += "\r\n"; 
+         if (i>0) res+="<b>Объективно:</b> <br>"+r;
+        res += "<p>"; 
        if($("#dop").val()!='')
-        res+="Дополнитеьная информация: \n"+$("#dop").val()+"\r\n";
+        res+="<b>Дополнитеьная информация:</b> <br>"+$("#dop").val()+"<p>";
         
-        
-         alert(res);
+         var iFrameDOM = $("#fr").contents();
+   //Теперь мы можем использовать find() для доступа к элементам iframe:
+   //например
+   res+='<hr> Прилагаемое изображение:<br>'
+   res+= "<br><img src='/upload/"+iFrameDOM.find("#fname").html()+"'/><br>";
+   
+        $("#otchet").html(res);
      });
+    
+     
+     
  })
  
 </script>

@@ -59,7 +59,7 @@ $registry->session = new Zend_Session_Namespace();
         $view->headScript()->appendFile('/js/jquery-1.7.1.min.js');
         $view->headScript()->appendFile('/js/jquery-ui-1.8.18.custom.min.js');
         $view->headScript()->appendFile('/js/bootstrap.min.js');
- 
+        $view->headScript()->appendFile('/js/fileuploader.js');
         // подключаем пока единственный css файл
         $view->headLink()->appendStylesheet('/css/bootstrap.css');
  $view->headLink()->appendStylesheet('/css/index.css');
