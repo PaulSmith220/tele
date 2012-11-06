@@ -21,11 +21,11 @@
 </form>
         </div>
         <br><hr>
-        <a class="btn" onclick="alert($('#id_file').val());">Готово</a>
+        <a class="btn" id="ready">Готово</a>
     </div>
 <div id="push"></div>
 <div id="result">
-    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля.">
+    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." title="<?php echo "Инициатор:\r\n".$_SESSION['orgname']."\r\n-------------------------------------------------------------------------------------------------------\r\n".$_SESSION['fio']."\r\n".$_SESSION['post']."\r\n-------------------------------------------------------------------------------------------------------\r\n"; ?> ">
   <?php echo "Инициатор:\r\n".$_SESSION['orgname']."\r\n-------------------------------------------------------------------------------------------------------\r\n".$_SESSION['fio']."\r\n".$_SESSION['post']."\r\n-------------------------------------------------------------------------------------------------------\r\n"; ?> 
     </textarea>
 </div>
@@ -71,6 +71,8 @@
     ul li ul li a{
         display:block;
         width:100%;
+        color:black;
+        font-weight:bold;
         padding-left:5px;
     }
     ul li ul li a:hover{
@@ -112,7 +114,11 @@
         border-radius: 5px;
        position:relative;
        top:0%;
+       
+       
     }
+    
+
   
     
 </style>
@@ -121,12 +127,36 @@
  $(document).ready(function(){
      $('#comps').click(function(){
          $('ul#comps').slideToggle(500); 
+         if ($(this).attr('onme')=='1'){
+             $(this).attr('onme','0');
+             $(this).css('font-weight','normal');
+         }else {
+             $(this).attr('onme','1');
+             $(this).css('font-weight','bold');
+         }
      });
      $(".ln").click(function(){
          $(this).next().slideToggle(500); 
      });
+     $("#anamnesis").change(function(){
+        $(this).css('color','darkgreen'); 
+        $(this).attr('changed','1');
+        
+         $(this).css('text-shadow',' 0px 0px 2px blue'); 
+     
+    
+
+    
+     });
       $("#anam").click(function(){
          $("#anamnesis").slideToggle(500); 
+         if ($(this).attr('onme')=='1'){
+             $(this).attr('onme','0');
+             $(this).css('font-weight','normal');
+         }else {
+             $(this).attr('onme','1');
+             $(this).css('font-weight','bold');
+         }
      });
      $("ul li ul li a").click(function(){
        if ($(this).attr('class')=='0'){
@@ -136,7 +166,62 @@
             $(this).attr('class','0');
            $(this).css('color','');
        }
-     })
+     });
+        $('#obj').click(function(){
+         $('ul#obj_ul').slideToggle(500); 
+         if ($(this).attr('onme')=='1'){
+             $(this).attr('onme','0');
+             $(this).css('font-weight','normal');
+         }else {
+             $(this).attr('onme','1');
+             $(this).css('font-weight','bold');
+         }
+     });
+      $('#neuro').click(function(){
+         $('ul#neuro').slideToggle(500); 
+         if ($(this).attr('onme')=='1'){
+             $(this).attr('onme','0');
+             $(this).css('font-weight','normal');
+         }else {
+             $(this).attr('onme','1');
+             $(this).css('font-weight','bold');
+         }
+     });
+     $("#ready").click(function(){
+       res = $("#result textarea").val();
+       res += "\r\n";
+       
+        i=0;
+        r = '';
+        $("ul#comps a.1").each(function(){
+            i++;
+            r+= '- '+$(this).html()+"\n";
+        });
+        if (i>0) res+="Пациент поступил с жалобами на:\n"+r;
+        res += "\r\n"; 
+        if ($("#anamnesis").attr('changed')=='1'){
+            res+="Анамнез:\n";
+            res+=$("#anamnesis").val();
+            res+="\n";
+             res += "\r\n"; 
+        }
+        
+        
+        
+        i=0;
+        r = '';
+        $("ul#obj_ul a.1").each(function(){
+            i++;
+            r+=$(this).attr('title')+': '+$(this).html()+"\n";
+        });
+         if (i>0) res+="Объективно: \n"+r;
+        res += "\r\n"; 
+       if($("#dop").val()!='')
+        res+="Дополнитеьная информация: \n"+$("#dop").val()+"\r\n";
+        
+        
+         alert(res);
+     });
  })
  
 </script>
