@@ -12,16 +12,16 @@
     </head>
     <body>
         <div id="file_holder" style="text-align:center;">
-<form action="upload.php" method="post" enctype="multipart/form-data">  
+<form action="upload.php" method="post" enctype="multipart/form-data" id="uf" >  
 
 <p><label for="userfile">Выберите файлы для загрузки:</label>
-<input id="userfile" class="input" type="file" name="userfile" style="display:none;" /></p>
-<a class="btn" onclick="$('#userfile').click();$(this).hide();">Выбрать</a>
-<div id="loading" style="display:none;"><img src="/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>
+    <input id="userfile" class="input" type="file" multiple onchange="$('#f1').html('Файлы выбраны');" name="userfile[]" style="display:none;" /></p>
+<div class="fname" id="f1"></div><a id="f1" class="btn" onclick="$('#userfile').click();">Выбрать</a>
+
 <div id="errormes"></div>  
 
 <br>
-<input type="submit" value="Загузить" class="btn btn-primary" />
+<input type="submit" onclick="window.parent.$('#loading').show();" value="Загузить" class="btn btn-primary" />
 
 </form>
 </div>

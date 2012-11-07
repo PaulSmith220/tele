@@ -39,7 +39,7 @@ class IndexController extends Zend_Controller_Action
        $postsset = $post_mdl->fetchAll();
        $plist = array();
        foreach ($postsset as $p){
-           $plist[] = "<a href='/card/new?v=".$p->id."'>".$p->name." </a>";
+           $plist[] = "<a href='/card/new?v=".$p->forms."'>".$p->name." </a>";
        }
        $this->view->plist = $plist;
        
