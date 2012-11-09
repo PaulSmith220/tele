@@ -1,0 +1,105 @@
+<style>
+    #info{
+        display:inline-block;
+        margin:10px;
+        margin-top:0px;
+    }
+    #control{
+     display:inline-block;   
+     margin-left:50px;
+   
+    }
+    #cont{
+        padding:20px;
+        background:rgba(255,255,255,0.5);
+        border-radius: 10px;
+        border:1px solid lightgrey;
+    }
+    a.sv{
+        display:block;
+        border-bottom: 1px solid navy;
+        width:200px;
+        cursor:pointer;
+        background-color:rgba(255,255,255,0.5);
+          -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
+    }
+    a.sv:not(#m):hover{
+        background-color:rgba(159,255,96,0.5);
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
+    }
+    ul{
+        list-style-image: url('/img/plus.png');
+    }
+
+    ul li ul{
+        background:rgba(200,200,200,0.5);
+        list-style:none;
+        padding:2px;
+        border-bottom:1px solid navy;
+    }
+    ul li ul li{
+          border-right: 1px solid navy;
+          margin-top:-2px;
+          margin-right:-2px;
+          margin-bottom: -2px;
+        backgroun-color:transparent;
+       -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear; 
+    }
+    ul li ul li:hover{
+      
+        cursor:pointer;
+         background-color:rgba(255,255,96,0.7);
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
+    }
+    ul li ul li a{
+        display:block;
+        width:100%;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+        $("a.sv").click(function(){
+            $(this).next().slideToggle(500);
+        })
+        
+        
+        
+    })
+</script>    
+<br>
+<?php $me= $_SESSION['id'];
+if ($me==$this->to_login){
+?>
+
+
+<div id="info">
+<span class="pull-left">Консультация <b>#<?= $this->id ?></b></span><br>
+    Инициатор:  <b><?= $this->creator ?></b><br> <br><i style="display:block;width:500px;"><?= $this->orgname?></i><br><input style="display:none;" value="<?= $this->creator_id ?>"/><br>
+    Создана: <b><?= $this->date ?></b><br>
+    <?php if($this->re!=-1) echo "Перенаправлена от: <b>".$this->re."</b>"; ?>
+</div>
+
+<hr>
+<div id="cont">
+   <?= $this->content ?>
+ </div><br>
+<div id="karts">Приложения:
+    <?= $this->karts ?>
+</div>
+<?php 
+}
+else echo ("<h4>Вы не имеете права просматривать данную консультацию</h2>");
+
+?>

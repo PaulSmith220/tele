@@ -27,9 +27,19 @@
  
    height:30px;
        list-style-image: url('/img/plus.png');
+       
+          background-color:transparent;
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
     }
     .hid li:hover{
-        background: url('/img/li.png');
+          background-color:rgba(159,255,96,0.3);
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
     }
     .hid li a{
         display:block;
@@ -97,7 +107,9 @@ for ($i=0;$i<=20;$i++){
             <ul>
                 <?php
              
-               
+                  foreach ($this->sendlist as $p){
+                    echo "<li>".$p."</li>";
+                }
                 
                 ?>
             </ul>
@@ -105,12 +117,14 @@ for ($i=0;$i<=20;$i++){
     </div>
 <p>
   <div>
-        <a class="btn btn-primary" style="width:100%;" href="#" onclick="$(this).next().slideToggle(500);">Принятые</a>
+        <a class="btn btn-primary" style="width:100%;" href="#" onclick="$(this).next().slideToggle(500);">Принятые <?php if ($this->newcons!=0)echo "<b>(".$this->newcons.")</b>"; ?></a>
         <div class="hid" style="display:none;">
             <ul>
                 <?php
              
-               
+                  foreach ($this->inlist as $p){
+                    echo "<li>".$p."</li>";
+                }
                 
                 ?>
             </ul>

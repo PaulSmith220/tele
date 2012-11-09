@@ -4,7 +4,23 @@
     <?= $this->content ?>
     
 
+</div><br>
+<center>
+    <input id="from" style="display:none;" value="<?php echo $_SESSION['login']; ?>" />
+<div id="who">
+    Кому отправляем:
+    <select>
+       <?php 
+       foreach($this->ps as $p){
+           echo "<option>";
+           echo $p->real_name;
+           echo "</option>";
+       }
+       ?>
+       
+    </select>
 </div>
+</center>
     <div id="additions">
         <div style='display:block;text-align:left;position:relative;width:300px;margin-left:-150px;left:50%;'>
             Дополнительная информация:
@@ -23,18 +39,52 @@
         </div>
         <br><hr>
         <a class="btn" id="ready">Готово</a>
-    </div>
-<div id="otchet"></div>
-<center><button class="btn btn-primary" id="send" style="display:none;opacity:0.0;">Отправить</button></center>
+    </div><center>
+        <div id="container">
+<textarea id="otchet" name="otchet"></textarea></div>
+   <script type="text/javascript">
+       $(document).ready(function(){
+           
+             CKEDITOR.replace('otchet',
+    {
+        // настройка тулбара
+        toolbar:
+        [
+          //  ['Source'],
+           // ['Link', 'Image'],
+            ['Undo','Redo'],
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+            ['Find','Replace','-','SelectAll','RemoveFormat'],
+            ['NumberedList', 'BulletedList', '-', 'SpecialChar', '-', 'Outdent', 'Indent', 'Blockquote'],
+        ],
+        // настройка высоты
+        height: 400
+      
+    });
+
+       })
+
+   
+</script>     
+        
+        <br>
+<button class="btn btn-primary" id="send" style="display:none;opacity:0.0;">Отправить</button>
+<br>
+<div id="sending" style="display:none;"><img src="/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
+    </center>
 <div id="push"></div>
 <div style="display:none;" id="result">
     <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." style="font-weight: normal;">
-  <?php echo $_SESSION['orgname']."<p>".$_SESSION['fio']."<p>".$_SESSION['post']."<p>"; ?> 
+  <?php echo $_SESSION['orgname']."<p><b>".$_SESSION['fio']."</b> - <i>".$_SESSION['post']."</i><br>"; ?> 
     </textarea>
 </div>
 
 
 <style>
+    #otchet{
+        width:600px;
+        height: 700px;
+    }
     iframe{
         border:0;
     }
@@ -63,9 +113,18 @@
         width:100%;
         padding-left:5px;
         border-radius: 5px;
+            background-color:transparent;
+         -webkit-transition:  background-color 0.5s linear;
+     -moz-transition:  background-color  0.5s linear;
+       -o-transition: background-color 0.5s linear;
+       transition:  background-color  0.5s linear;
     }
     .ln:hover{
-        background:url('/img/li.png');
+          background-color:rgba(159,255,96,0.2);
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
     }
     ul {
         list-style: none;
@@ -84,9 +143,18 @@
         color:black;
         font-weight:bold;
         padding-left:5px;
+           background-color:transparent;
+         -webkit-transition:  background-color 0.5s linear;
+     -moz-transition:  background-color  0.5s linear;
+       -o-transition: background-color 0.5s linear;
+       transition:  background-color  0.5s linear;
     }
     ul li ul li a:hover{
-        background:url('/img/li_red.png');
+       background-color:rgba(255,96,96,0.2);
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
     }
     #functions{
      
@@ -132,146 +200,4 @@
   
     
 </style>
-<script>
-    
- $(document).ready(function(){
-     $('#comps').click(function(){
-         $('ul#comps').slideToggle(500); 
-         if ($(this).attr('onme')=='1'){
-             $(this).attr('onme','0');
-             $(this).css('font-weight','normal');
-         }else {
-             $(this).attr('onme','1');
-             $(this).css('font-weight','bold');
-         }
-     });
-     $(".ln").click(function(){
-         $(this).next().slideToggle(500); 
-     });
-     $("#anamnesis").change(function(){
-        $(this).css('color','darkgreen'); 
-        $(this).attr('changed','1');
-        
-         $(this).css('text-shadow',' 0px 0px 2px blue'); 
-     
-    
-
-    
-     });
-      $("#anam").click(function(){
-         $("#anamnesis").slideToggle(500); 
-         if ($(this).attr('onme')=='1'){
-             $(this).attr('onme','0');
-             $(this).css('font-weight','normal');
-         }else {
-             $(this).attr('onme','1');
-             $(this).css('font-weight','bold');
-         }
-     });
-     $("ul li ul li a").click(function(){
-       if ($(this).attr('class')=='0'){
-           $(this).attr('class','1');
-           $(this).css('color','green');
-       }else {
-            $(this).attr('class','0');
-           $(this).css('color','');
-       }
-     });
-        $('#obj').click(function(){
-         $('ul#obj_ul').slideToggle(500); 
-         if ($(this).attr('onme')=='1'){
-             $(this).attr('onme','0');
-             $(this).css('font-weight','normal');
-         }else {
-             $(this).attr('onme','1');
-             $(this).css('font-weight','bold');
-         }
-     });
-      $('#neuro').click(function(){
-         $('ul#neuro').slideToggle(500); 
-         if ($(this).attr('onme')=='1'){
-             $(this).attr('onme','0');
-             $(this).css('font-weight','normal');
-         }else {
-             $(this).attr('onme','1');
-             $(this).css('font-weight','bold');
-         }
-     });
-     $("#ready").click(function(){
-       res = "<div style='padding:5px;border:1px solid grey;'>"+$("#result textarea").val();
-       res += "</div><p>";
-       
-        i=0;
-        r = '';
-        $("ul#comps a.1").each(function(){
-            i++;
-            r+= '- '+$(this).html()+"<br>";
-        });
-        if (i>0) res+="</b><b>Пациент поступил с жалобами на:</b><br>"+r;
-        res += "<p>"; 
-        if ($("#anamnesis").attr('changed')=='1'){
-            res+="<b>Анамнез:</b><br>";
-            res+=$("#anamnesis").val();
-            res+="<br>";
-             res += "<p>"; 
-        }
-        
-        
-        
-        i=0;
-        r = '';
-        $("ul#obj_ul a.1").each(function(){
-            i++;
-            r+=$(this).attr('title')+': '+$(this).html()+"<br>";
-        });
-         if (i>0) res+="<b>Объективно:</b> <br>"+r;
-        res += "<p>"; 
-        
-         i=0;
-        r = '';
-        $("ul#neuro a.1").each(function(){
-            i++;
-            r+=$(this).attr('title')+': '+$(this).html()+"<br>";
-        });
-         if (i>0) res+="<b>Невростатус:</b> <br>"+r;
-        res += "<p>"; 
-        
-       if($("#dop").val()!='')
-        res+="<b>Дополнитеьная информация:</b> <br>"+$("#dop").val()+"<p>";
-        
-         var iFrameDOM = $("#fr").contents();
-   //Теперь мы можем использовать find() для доступа к элементам iframe:
-   //например
-   s = iFrameDOM.find("#fnamebox").html();
-   if (s!=undefined){
-       if (s.length>0){
-   res+='<hr> Прилагаемые файлы:<br>';
-   
-   m = s.split('|');
-   i = m.length;
-   for(i=1;i<=m.length-1;i++)
-       if(m[i].substring(m[i].lastIndexOf('.')+1,m[i].length).toLowerCase()=='pdf'){
-     res+= "<br><a target=_blank href='/upload_pdf/"+m[i]+"'><img width='32' src='/img/pdf.ico' />"+m[i]+"</a><br>";
-
- }else if(m[i].substring(m[i].lastIndexOf('.')+1,m[i].length).toLowerCase()=='PDF'){
-      res+= "<br><a target=_blank href='/upload_pdf/"+m[i]+"'><img width='32' src='/img/pdf.ico' />"+m[i]+"</a><br>";
-}else 
-     res+= "<br><img width='32' src='/upload/"+m[i]+"_thumb.jpg' /><a onclick='$(this).next().slideToggle(500);'>"+m[i]+"</a><div style='display:none;font-size:70%;'> Нажмите на картинку,чтобы скачать<br><a href='/upload/"+m[i]+".jpg'><img title='Скачать' src='/upload/"+m[i]+".jpg'/></a></div><br>";
-   }
-
-
-}
-
-
-
-
-        $("#otchet").html(res);
-        $("#send").show();
-        $("#send").animate({'opacity':1.0},500);
-     });
-    
-     
-     
- })
- 
-</script>
+<textarea id="kart"></textarea>

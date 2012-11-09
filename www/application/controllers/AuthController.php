@@ -25,6 +25,7 @@ Zend_Registry::set('staticSalt', $staticSalt);
 
       $log_m->insert($data);
        Zend_Auth::getInstance()->clearIdentity();
+       $_SESSION['login']='';
     unset($_SESSION['login']);
     unset($_SESSION['post']);
     unset($_SESSION['fio']);

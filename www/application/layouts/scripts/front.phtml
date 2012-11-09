@@ -17,9 +17,15 @@
   
         // выводим мета-теги
         echo $this->headMeta();
-  
-        // выводим яваскрипты
-        echo $this->headScript();
+         // выводим яваскрипты
+        echo $this->headScript(); ?>
+  	
+	<script type="text/javascript" src="/plugins/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="/js/new.js"></script>
+
+        
+        <?php
+       
   
         // выводим css фалы
         echo $this->headLink();
@@ -88,8 +94,10 @@
                 <div class="navbar-inner">
                     <div class="container" style="width: auto">
                         <div class="pull-left" style="font-size:18px;color:white;padding-top:10px;">Телемедицина 
-                        <?php if (isset($_SESSION['login'])) echo " - ".$_SESSION['fio']." (".$_SESSION['login'].") - ".$_SESSION['post'] ?></div>
-                      <a href='/auth/logout' class="btn pull-right">Выход</a>  
+                        <?php if (isset($_SESSION['login'])){ 
+                            $_SESSION['me'] = $_SESSION['login'];
+                            echo " - ".$_SESSION['fio']." (".$_SESSION['login'].") - ".$_SESSION['post'];} ?></div>
+                         <a href='/auth/logout' class="btn pull-right">Выход</a>&nbsp;  <a class="btn pull-right" href="/">На главную</a>
                             <br>
                        
                           
