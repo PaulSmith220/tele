@@ -9,7 +9,7 @@
     <input id="from" style="display:none;" value="<?php echo $_SESSION['login']; ?>" />
 <div id="who">
     Кому отправляем:
-    <select>
+    <select id="adresat">
        <?php 
        foreach($this->ps as $p){
            echo "<option>";
@@ -20,21 +20,28 @@
        
     </select>
 </div>
-</center>
+
+<div>
+    <input type="checkbox" id="poly_check" name="poly_check" checked="1" /> <label style="display:inline;" id="lab_check" for="poly_check">Включить в отчет Шкалу оценки Полиорганной дисфункции</label>   
+</div>
+ 
+    </center>
+
     <div id="additions">
-        <div style='display:block;text-align:left;position:relative;width:300px;margin-left:-150px;left:50%;'>
+        <div style='display:block;text-align:left;position:relative;width:40em;margin-left:-20em;left:50%;'>
             Дополнительная информация:
             <br>
-            <textarea id="dop" style="width:100%;"></textarea>
+            <textarea id="dop" style="width:40em;height:10em;"></textarea>
+           
         </div><br>
           <div style='display:block;position:relative;width:300px;margin-left:-150px;left:50%;'>
           
               
             
-              <iframe id="fr" src="/frames/123.html" width="300" height="160" hspace="10" vspace="10" align="center" >
+              <iframe id="fr" src="/public/frames/123.html" width="300" height="160" hspace="10" vspace="10" align="center" >
 Ваш браузер не поддерживает плавающие фреймы!
 </iframe> 
-  <div id="loading" style="display:none;"><img src="/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>            
+  <div id="loading" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>            
               
         </div>
         <br><hr>
@@ -70,7 +77,7 @@
         <br>
 <button class="btn btn-primary" id="send" style="display:none;opacity:0.0;">Отправить</button>
 <br>
-<div id="sending" style="display:none;"><img src="/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
+<div id="sending" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
     </center>
 <div id="push"></div>
 <div style="display:none;" id="result">
@@ -78,9 +85,46 @@
   <?php echo $_SESSION['orgname']."<p><b>".$_SESSION['fio']."</b> - <i>".$_SESSION['post']."</i><br>"; ?> 
     </textarea>
 </div>
-
+<form id="pform" action="/card/add/" method="POST" >
+    <input type="text" name="who"/>
+    <input type="text" name="from"/>
+    <input type="text" name="karts"/>
+    <input type="text" name="i"/>
+</form>
 
 <style>
+    #pbar{
+       width:150px;
+       height:20px;
+       border:1px solid grey;
+       background:darkgreen;
+       text-align: left;
+    }
+    #pr{
+        background:red;
+        height:20px;
+        width:50%;
+    }
+ 
+    #lab_check{
+             background-color:transparent;
+         -webkit-transition:  background-color 0.5s linear;
+     -moz-transition:  background-color  0.5s linear;
+       -o-transition: background-color 0.5s linear;
+       transition:  background-color  0.5s linear;  
+    }
+    #lab_check:hover{
+        cursor:pointer;
+              background-color:rgba(159,255,96,0.2);
+         -webkit-transition:  background-color 0.2s linear;
+     -moz-transition:  background-color  0.2s linear;
+       -o-transition: background-color 0.2s linear;
+       transition:  background-color  0.2s linear;
+    }
+    #poly_check{
+        margin-top:-5px;
+       
+    }
     #otchet{
         width:600px;
         height: 700px;
