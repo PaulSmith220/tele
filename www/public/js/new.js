@@ -1,29 +1,89 @@
-  
+ var s;
+window.onload=function(){
+   //  
+    setTimeout('$("#cke_otchet").append("<div id=moveme>Формируемый отчет</div><button id=ok value=ok class=\'btn btn-primary\'>На отправку</button>");$("#load_editor").fadeOut(500)',4000);
+} 
  $(document).ready(function(){
+   
+    
+     
      $('#comps').click(function(){
+
          $('ul#comps').slideToggle(500); 
          if ($(this).attr('onme')=='1'){
              $(this).attr('onme','0');
-             $(this).css('font-weight','normal');
+           //  $(this).css('font-weight','normal');
          }else {
              $(this).attr('onme','1');
-             $(this).css('font-weight','bold');
+            // $(this).css('font-weight','bold');
+          $('ul:not[id=comps]').each(function(){
+              $(this).hide();
+          });
          }
      });
+     
      $(".ln").click(function(){
          $(this).next().slideToggle(500); 
+    
+        
      });
      $("#anamnesis").change(function(){
         $(this).css('color','darkgreen'); 
         $(this).attr('changed','1');
-        
+        CKEDITOR.instances.otchet.setReadOnly(false);
+        $("#ready").click();
+        clearTimeout(s);
+          s = setTimeout('CKEDITOR.instances.otchet.setReadOnly(true)',2000);
          $(this).css('text-shadow',' 0px 0px 2px blue'); 
      
     
 
     
      });
+     ///////////////////////////////////////////
+     
+     ////////////////////////////////////////////
+     
+     
+   
+     tmove = 0;
+     xm=0;
+     ym=0;
+     $("body").mousemove(function(e){
+         if(tmove==1){
+            xs = e.pageX;
+            ys = e.pageY;
+            $("body").css('user-select','none');
+            $("#cke_otchet").offset({top:ys-ym, left:xs-xm});
+         }else{
+              $("body").css('user-select','');
+         }
+     });
+     
+  //CKEDITOR.instances.object_name.getData() --> тут хранится содержимое ckeditor объекта с именем object_name
+
+ready_send = 0;
+
+     $("#moveme").live('mousedown',function(e){
+        $("#cke_otchet").css('border','2px solid red');
+        xm = e.pageX - $(this).offset().left;
+        ym = e.pageY - $(this).offset().top;
+        tmove=1;
+       
+     });
+     $("#cke_otchet").live('mousedown',function(){
+     
+     });
+     $("#cke_otchet").live('mouseup',function(){
+        $(this).css('border','0');
+         tmove=0;
+       
+     });
+     $("#cke_otchet").live('mouseleave',function(){
+       
+     });
       $("#anam").click(function(){
+         
          $("#anamnesis").slideToggle(500); 
          if ($(this).attr('onme')=='1'){
              $(this).attr('onme','0');
@@ -37,9 +97,16 @@
        if ($(this).attr('class')=='0'){
            $(this).attr('class','1');
            $(this).css('color','green');
+                 clearTimeout(s); 
+       CKEDITOR.instances.otchet.setReadOnly(false);
+            $("#ready").click();
+          
+     s=  setTimeout('CKEDITOR.instances.otchet.setReadOnly(true)',2000);
+          
        }else {
             $(this).attr('class','0');
            $(this).css('color','');
+           $("#ready").click();
        }
      });
         $('#obj').click(function(){
@@ -115,7 +182,7 @@
             i++;
             r+= '- '+$(this).html()+"<br>";
         });
-        if (i>0) {complaints+="</b><b>Пациент поступил с жалобами на:</b><br>"+r;
+        if (i>0) {complaints+="</b><br><b>Пациент поступил с жалобами на:</b><br>"+r;
         }
     
        
@@ -224,7 +291,7 @@
  }else if(m[i].substring(m[i].lastIndexOf('.')+1,m[i].length).toLowerCase()=='PDF'){
       karts+= "<br><a target=_blank href='/public/upload_pdf/"+m[i]+"'><img width='32' src='/public/img/pdf.ico' />"+m[i]+"</a><br>";
 }else 
-     karts+= "<br><img width='32' src='/public/upload/"+m[i]+"_thumb.jpg' /><a class='simg'>"+m[i]+"</a><div style='display:none;font-size:70%;'> Нажмите на картинку,чтобы скачать<br><a href='/public/upload/"+m[i]+".jpg'><img title='Скачать' src='/public/upload/"+m[i]+".jpg'/></a></div><br>";
+     karts+= "<br><img width='32' src='/public/upload/"+m[i]+"_thumb.jpg' /><a class='simg'>"+m[i]+"</a><div style='display:none;font-size:70%;'> Нажмите на картинку,чтобы скачать<br><a href='/public/upload/load.php?f="+m[i]+".jpg'><img title='Скачать' src='/public/upload/"+m[i]+".jpg'/></a></div><br>";
    }
 $("#kart").html(karts);
 
@@ -240,6 +307,7 @@ $("#kart").html(karts);
        //$('#otchet').val(CKEDITOR.instances['otchet'].getData());
         $("#send").show();
         $("#send").animate({'opacity':1.0},500);
+         // CKEDITOR.instances.otchet.setReadOnly(false);
      });
      $(".simg").click(function(){
         $(this).next().slideToggle(500); 
@@ -270,5 +338,5 @@ abc = (CKEDITOR.instances['otchet'].getData());
      });
     
      
-     
+
  })

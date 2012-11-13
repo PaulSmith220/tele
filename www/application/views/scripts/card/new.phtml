@@ -1,3 +1,5 @@
+
+
 <div class="topmenu">  <?= $this->menu ?></div>
 <div id="functions">
 
@@ -7,19 +9,7 @@
 </div><br>
 <center>
     <input id="from" style="display:none;" value="<?php echo $_SESSION['login']; ?>" />
-<div id="who">
-    Кому отправляем:
-    <select id="adresat">
-       <?php 
-       foreach($this->ps as $p){
-           echo "<option>";
-           echo $p->real_name;
-           echo "</option>";
-       }
-       ?>
-       
-    </select>
-</div>
+
 
 <div>
     <input type="checkbox" id="poly_check" name="poly_check" checked="1" /> <label style="display:inline;" id="lab_check" for="poly_check">Включить в отчет Шкалу оценки Полиорганной дисфункции</label>   
@@ -50,6 +40,8 @@
         <div id="container">
 <textarea id="otchet" name="otchet"></textarea></div>
    <script type="text/javascript">
+       var editing = 0;
+       
        $(document).ready(function(){
            
              CKEDITOR.replace('otchet',
@@ -66,9 +58,64 @@
         ],
         // настройка высоты
         height: 400
+       
       
     });
+   
+//
+$(window).resize(function(){
+    if (editing==1){
+      $("#ok").click();  
+    }
+});
+var old_x;
+var old_y;
+var old_w;
+var old_h;
+$("#ok").live('click',function(){
+   if (editing==0){
+ $("#ready").click();
+   old_x =  $("#cke_otchet").offset().left;
+  old_y =  $("#cke_otchet").offset().top;
+  old_w =  $("#cke_otchet").width();
+  old_h =  $("#cke_otchet").height();
+ 
+  editing = 1;
+  
 
+   w = $(document).width();
+   h = $(document).height();
+    
+   pr_x = 2/100;
+   pr_y = 5/100;
+   pr_w = 70/100;
+   pr_w2 = 20/100
+   pr_h = 40/100;
+   sm_x = pr_x * w;
+   sm_y = pr_y * h;
+   sc_w = pr_w * w;
+   sc_h = pr_h * h;
+   sc_w2 = pr_w2 * w;
+   $("#cke_otchet").offset({top:sm_y,left:sm_x});
+   $("#send_panel").show();
+   $("#send_panel").offset({top:sm_y,left:sm_x+sc_w});
+   
+   $("#send_panel").css('width',sc_w2);
+   $("#send_panel").css('height',sc_h);
+  // $("#cke_otchet").width(sc_w);
+  CKEDITOR.instances.otchet.resize(sc_w,sc_h);
+  CKEDITOR.instances.otchet.setReadOnly(false);
+    };
+});
+$("#mini").click(function(){
+    if (confirm("Все внесенные вами вручную изменения будут потеряны.\n Продолжить?")){
+    $("#cke_otchet").offset({top:old_y,left:old_x});
+      CKEDITOR.instances.otchet.resize(old_w,old_h);
+  CKEDITOR.instances.otchet.setReadOnly(true);
+   $("#send_panel").hide();
+   editing = 0;
+    }
+});
        })
 
    
@@ -79,20 +126,126 @@
 <br>
 <div id="sending" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
     </center>
+
+<div id="send_panel">
+     
+       <button class="btn btn-primary pull-right" id="mini">Свернуть</button><br>
+      <hr>
+  <div id="who">
+    Кому отправляем:
+    <select id="adresat">
+       <?php 
+       foreach($this->ps as $p){
+           echo "<option>";
+           echo $p->real_name;
+           echo "</option>";
+       }
+       ?>
+       
+    </select><br>
+  
+</div>
+</div>
 <div id="push"></div>
 <div style="display:none;" id="result">
     <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." style="font-weight: normal;">
   <?php echo $_SESSION['orgname']."<p><b>".$_SESSION['fio']."</b> - <i>".$_SESSION['post']."</i><br>"; ?> 
     </textarea>
 </div>
-<form id="pform" action="/card/add/" method="POST" >
+<form id="pform" action="/card/add/" method="POST" style="display:none;">
     <input type="text" name="who"/>
     <input type="text" name="from"/>
     <input type="text" name="karts"/>
     <input type="text" name="i"/>
 </form>
-
+<div id="load_editor">
+    <div id="pre">Загрузка...<br><img src="/public/img/ajax-loader.gif"> </div>
+</div>
 <style>
+    #ok{
+        height:20px;
+        background:#0066cc;
+        color:white;
+        font-weight: bold;
+        padding: 5px;
+    }
+    #send_panel{
+        position:fixed;
+        display:none;
+        padding:10px;
+        background:lightgrey url('/public/img/grid.png');
+        border:1px solid grey;
+        border-radius:10px;
+    }
+    #ready{
+        display:none;
+    }
+    #send{
+        display:none;
+    }
+    .ln a{
+        curor:pointer;
+        
+    }
+    #load_editor{
+         position: absolute;
+       top:0px;
+       left:0px;
+       width:100%;
+       height:1000%;
+       background:black;
+       opacity:0.8;
+       z-index: 5;
+    
+    }
+    
+    #load_editor #pre{
+        background-color: white;
+       text-align:center;
+        width:200px;
+        height:50px;
+         border:1px solid black;
+        border-radius: 5px;
+        position: fixed;
+        left:50%;
+        margin-left:-64px;
+        top:300px;
+        z-index: 7;
+    }
+    #moveme{
+     position: absolute;
+     top:0;
+      width:98%;
+      background:url('/public/img/k.png');
+        display:block;
+       
+        height:10px;
+        color:white;
+        font-weight:bold;
+        text-align: center;
+        font-size: 70%;
+        line-height: 110%;
+        cursor: move;
+        border-radius:5px 5px 0px 0px;
+    }
+    #moveme:hover{
+       cursor: move; 
+    }
+    #movemo:active{
+        cursor: move;
+    }
+    #cke_otchet{
+        
+        position:fixed;
+        top:100%;
+        margin-top:-550px;
+       
+        left:100%;
+        width:30%;
+        margin-left:-30%;
+     
+    }
+  
     #pbar{
        width:150px;
        height:20px;
@@ -225,7 +378,7 @@
         min-height: 270px;
     }   
     #push{
-        height:300px;
+        height:400px;
         width:100%;
     }
     #anamnesis{
@@ -244,4 +397,4 @@
   
     
 </style>
-<textarea id="kart"></textarea>
+<textarea id="kart" style="display:none;"></textarea>

@@ -88,7 +88,8 @@ if ($me==$this->to_login){
 <span class="pull-left">Консультация <b>#<?= $this->id ?></b></span><br>
     Инициатор:  <b><?= $this->creator ?></b><br> <br><i style="display:block;width:500px;"><?= $this->orgname?></i><br><input style="display:none;" value="<?= $this->creator_id ?>"/><br>
     Создана: <b><?= $this->date ?></b><br>
-    <?php if($this->re!=-1) echo "Перенаправлена от: <b>".$this->re."</b>"; ?>
+<?php if($this->re!=-1) echo "Перенаправлена от: <b>".$this->re."<br>Комментарий при перенаправлении:</b><br><div style='padding:5px;border:1px solid grey;border-radius:5px;'>".$this->re_com."</div>"; ?>
+
 </div>
 
 <hr>

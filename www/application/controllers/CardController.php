@@ -17,17 +17,17 @@ class CardController extends Zend_Controller_Action
        //Создаем меню
        $this->view->menu='';
 
-       $this->view->menu .= "<center><a id='comps'  class='btn btn-primary'>Жалобы на</a>
-           <a id='anam' class='btn btn-primary'>Анамнез</a>
-           <a id='obj' class='btn btn-primary'>Объективно</a>";
-       $this->view->menu .="<a id='neuro'  class='btn btn-primary'>Невростатус</a>
-           <a id='local'  class='btn btn-primary'>Локальный статус</a>";
-       $this->view->menu .="<a id='poly'  class='btn btn-primary'>Полиорганная Дисфункция</a>";
-       $this->view->menu .="<a id='lech'  class='btn btn-primary'>Лечение</a>";
-       $this->view->menu .="<a id='op'  class='btn btn-primary'>Операции</a>";
-       $this->view->menu .="<a id='rek'  class='btn btn-primary'>Рекомендации</a>";
-       $this->view->menu .="<a id='dis'  class='btn btn-primary'>Выписан</a>";
-       $this->view->menu .="<a id='atdis'  class='btn btn-primary'>При выписке</a></center>";
+       $this->view->menu .= "<center><a id='comps' act='top' onme='0'  class='btn btn-primary'>Жалобы на</a>
+           <a id='anam' act='top' onme='0' class='btn btn-primary'>Анамнез</a>
+           <a id='obj' act='top' onme='0' class='btn btn-primary'>Объективно</a>";
+       $this->view->menu .="<a id='neuro' act='top' onme='0'  class='btn btn-primary'>Невростатус</a>
+           <a id='local' act='top' onme='0'  class='btn btn-primary'>Локальный статус</a>";
+       $this->view->menu .="<a id='poly' act='top' onme='0'  class='btn btn-primary'>Полиорганная Дисфункция</a>";
+       $this->view->menu .="<a id='lech' act='top' onme='0'  class='btn btn-primary'>Лечение</a>";
+       $this->view->menu .="<a id='op' act='top' onme='0'  class='btn btn-primary'>Операции</a>";
+       $this->view->menu .="<a id='rek' act='top' onme='0'  class='btn btn-primary'>Рекомендации</a>";
+       $this->view->menu .="<a id='dis' act='top' onme='0'  class='btn btn-primary'>Выписан</a>";
+       $this->view->menu .="<a id='atdis' act='top' onme='0'  class='btn btn-primary'>При выписке</a></center>";
      //Авторицация есть, делаем что хотим
        $post = $this->getParam("v");
      
@@ -56,7 +56,7 @@ class CardController extends Zend_Controller_Action
        $this->view->content = '';
        
        //Залезаем в жалобы 
-        $this->view->content .= "<ul id='comps' style='display:none;'>";
+        $this->view->content .= "<ul id='comps' class='top' style='display:none;'>";
        $mcpt = new Model_Comp();
        foreach($forms as $f){
             $this->view->content .= "<li>";
@@ -91,7 +91,7 @@ class CardController extends Zend_Controller_Action
          foreach ($objs as $obj){
           $objset = $mobj->fetchAll("id='".$obj."'");         
             foreach($objset as $o){
-                 $this->view->content .= "<ul id='obj_ul' style='display:none;'><li>";
+                 $this->view->content .= "<ul class='top'  id='obj_ul' style='display:none;'><li>";
                 //Разбиваем список разделов:
                 $o_razd = array();
                 $o_razd = explode(',',$o->fields);
@@ -129,7 +129,7 @@ class CardController extends Zend_Controller_Action
          foreach($neus as $n){
              $nset = $m_new->fetchAll("id='".$n."'");
              foreach($nset as $new){
-                    $this->view->content .= "<ul id='neuro' style='display:none;'><li>";
+                    $this->view->content .= "<ul class='top'  id='neuro' style='display:none;'><li>";
                  $n_zag = array();
                  $n_fields = array();
                  $n_zag = explode(',',$new->fields);
@@ -156,7 +156,7 @@ class CardController extends Zend_Controller_Action
          foreach($neus as $n){
              $nset = $m_new->fetchAll("id='".$n."'");
              foreach($nset as $new){
-                    $this->view->content .= "<ul id='local' style='display:none;'><li>";
+                    $this->view->content .= "<ul class='top'  id='local' style='display:none;'><li>";
                  $n_zag = array();
                  $n_fields = array();
                  $n_zag = explode(',',$new->fields);
@@ -183,7 +183,7 @@ class CardController extends Zend_Controller_Action
          foreach($neus as $n){
              $nset = $m_new->fetchAll("id='".$n."'");
              foreach($nset as $new){
-                    $this->view->content .= "<ul id='poly' style='display:none;'><li>";
+                    $this->view->content .= "<ul class='top'  id='poly' style='display:none;'><li>";
                  $n_zag = array();
                  $n_fields = array();
                  $n_zag = explode(',',$new->fields);
@@ -210,7 +210,7 @@ class CardController extends Zend_Controller_Action
          foreach($neus as $n){
              $nset = $m_new->fetchAll("id='".$n."'");
              foreach($nset as $new){
-                    $this->view->content .= "<ul id='heal' style='display:none;'><li>";
+                    $this->view->content .= "<ul class='top'  id='heal' style='display:none;'><li>";
                  $n_zag = array();
                  $n_fields = array();
                  $n_zag = explode(',',$new->fields);
@@ -425,7 +425,8 @@ $this->view->content = "Консультация перенаправлена.<b
     $this->view->content='';
 if (count($mset)==0) die("Ошибка. Отсутствует запрошенная консультация");
 foreach($mset as $m){
-    
+    $this->view->re_com = $m->re_com;
+    $this->view->re = $m->re;
     $this->view->content=$m->text;
     $this->view->karts = $m->files;
     $this->view->date = $m->date;

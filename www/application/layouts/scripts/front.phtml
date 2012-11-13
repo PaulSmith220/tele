@@ -21,6 +21,7 @@
         echo $this->headScript(); ?>
   	
 	<script type="text/javascript" src="/public/plugins/ckeditor/ckeditor.js"></script>
+       <script type="text/javascript" src="/public/js/jquery.easydrag.js"></script>
         <script type="text/javascript" src="/public/js/new.js"></script>
 
         
@@ -128,7 +129,14 @@
                   
                    
                 </div>
-                <div class="footer"><?php echo date('F, d, Y'); ?></div>
+                <div class="footer"><?php 
+                $converter = array(
+        'January' => 'Январь',   'February' => 'Февраль',   'March' => 'Март', 'April' => 'Апрель',
+        'May' => 'Май',   'June' => 'Июнь',   'July' => 'Июль', 'August' => 'Август',
+        'September' => 'Сентябрь', 'October' => 'Октябрь', 'November' => 'Ноябрь', 'December' => 'Декабрь');
+                $date =  date('F, d, Y');
+                
+                echo strtr($date, $converter); ?></div>
             </div>
          
             <hr/>
