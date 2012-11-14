@@ -78,20 +78,20 @@ class CardController extends Zend_Controller_Action
           $this->view->content .= "</li>";
            
        }
-     
+     $this->view->content .= "</ul>";
        //Далее выводи анамнез
        
-         $this->view->content .= "</ul><textarea style='display:none' id='anamnesis' placeholder='Анамнез в свободной форме'>
+         $this->view->content .= "<ul style='display:none' id='anam'><li><center><textarea  id='anamnesis' placeholder='Анамнез в свободной форме'>
 1. Пол:
 2. Возраст: 
-3. Причина обращения:</textarea>"; 
+3. Причина обращения:</textarea></center></li></ul>"; 
        
       // Объективно:
          $mobj = new Model_Obj(); 
          foreach ($objs as $obj){
           $objset = $mobj->fetchAll("id='".$obj."'");         
             foreach($objset as $o){
-                 $this->view->content .= "<ul class='top'  id='obj_ul' style='display:none;'><li>";
+                 $this->view->content .= "<ul class='top'  id='obj' style='display:none;'><li>";
                 //Разбиваем список разделов:
                 $o_razd = array();
                 $o_razd = explode(',',$o->fields);
@@ -210,7 +210,7 @@ class CardController extends Zend_Controller_Action
          foreach($neus as $n){
              $nset = $m_new->fetchAll("id='".$n."'");
              foreach($nset as $new){
-                    $this->view->content .= "<ul class='top'  id='heal' style='display:none;'><li>";
+                    $this->view->content .= "<ul class='top'  id='lech' style='display:none;'><li>";
                  $n_zag = array();
                  $n_fields = array();
                  $n_zag = explode(',',$new->fields);

@@ -1,32 +1,71 @@
  var s;
 window.onload=function(){
    //  
-    setTimeout('$("#cke_otchet").append("<div id=moveme>Формируемый отчет</div><button id=ok value=ok class=\'btn btn-primary\'>На отправку</button>");$("#load_editor").fadeOut(500)',4000);
+ setTimeout('$("#cke_top_otchet").hide();$("#load_editor").fadeOut(500);',3000);
 } 
  $(document).ready(function(){
-   
     
-     
+   $('a[act=top]').click(function(){
+       
+        $('a[act=top]').each(function(){
+           // $(this).attr('onme','0');
+             $(this).css('font-weight','normal'); 
+        });
+       
+        a = $(this).attr('id');
+       if ($(this).attr('onme')=='1'){
+             $(this).attr('onme','0');
+             $(this).css('font-weight','normal');
+         }else {
+             $(this).attr('onme','1');
+             $(this).css('font-weight','bold');
+         } 
+         
+  
+       
+         
+  
+     $('ul').each(function(){
+       id = $(this).attr('id');
+       if (a!=id){
+           $('ul#'+id).slideUp(500);
+          
+           
+       }else{
+            $('ul#'+a).slideToggle(500);
+       }
+     });
+      
+   });
+  
+    
+    /* 
      $('#comps').click(function(){
 
          $('ul#comps').slideToggle(500); 
          if ($(this).attr('onme')=='1'){
              $(this).attr('onme','0');
-           //  $(this).css('font-weight','normal');
+             $(this).css('font-weight','normal');
          }else {
              $(this).attr('onme','1');
-            // $(this).css('font-weight','bold');
-          $('ul:not[id=comps]').each(function(){
-              $(this).hide();
-          });
+             $(this).css('font-weight','bold');
+         
          }
      });
-     
+  */   
      $(".ln").click(function(){
          $(this).next().slideToggle(500); 
     
         
      });
+     
+     $("#lab_check").click(function(){
+       setTimeout('$("#ready").click()',200);
+     });
+     $("#poly_check").click(function(){
+         setTimeout('$("#ready").click()',200);
+     });
+     
      $("#anamnesis").change(function(){
         $(this).css('color','darkgreen'); 
         $(this).attr('changed','1');
@@ -82,9 +121,9 @@ ready_send = 0;
      $("#cke_otchet").live('mouseleave',function(){
        
      });
-      $("#anam").click(function(){
+  /*    $("#anam").click(function(){
          
-         $("#anamnesis").slideToggle(500); 
+         $("ul#anam").slideToggle(500); 
          if ($(this).attr('onme')=='1'){
              $(this).attr('onme','0');
              $(this).css('font-weight','normal');
@@ -93,10 +132,13 @@ ready_send = 0;
              $(this).css('font-weight','bold');
          }
      });
+*/
      $("ul li ul li a").click(function(){
        if ($(this).attr('class')=='0'){
            $(this).attr('class','1');
            $(this).css('color','green');
+           $(this).css('display:inline;')
+           $(this).css('background','#c0ffbb');
                  clearTimeout(s); 
        CKEDITOR.instances.otchet.setReadOnly(false);
             $("#ready").click();
@@ -106,11 +148,13 @@ ready_send = 0;
        }else {
             $(this).attr('class','0');
            $(this).css('color','');
+           $(this).css('background','transparent');
            $("#ready").click();
        }
      });
+ /*    
         $('#obj').click(function(){
-         $('ul#obj_ul').slideToggle(500); 
+         $('ul#obj').slideToggle(500); 
          if ($(this).attr('onme')=='1'){
              $(this).attr('onme','0');
              $(this).css('font-weight','normal');
@@ -159,6 +203,8 @@ ready_send = 0;
              $(this).css('font-weight','bold');
          }
      });
+  */   
+     
      $("#ready").click(function(){
        //res = "<div style='padding:5px;border:1px solid grey;'>"+$("#result textarea").val();
        header = $("#result textarea").val();

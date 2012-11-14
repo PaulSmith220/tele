@@ -1,12 +1,16 @@
 
-
+<div class="menu">
 <div class="topmenu">  <?= $this->menu ?></div>
 <div id="functions">
-
+    <div id="inner">
     <?= $this->content ?>
-    
+    </div>
 
-</div><br>
+</div>
+
+</div>
+
+<div style="height:100px;"></div>
 <center>
     <input id="from" style="display:none;" value="<?php echo $_SESSION['login']; ?>" />
 
@@ -17,7 +21,13 @@
  
     </center>
 
-    <div id="additions">
+<center>
+        <div id="container">
+<textarea id="otchet" name="otchet"></textarea></div>
+     
+        
+        <br>
+            <div id="additions">
         <div style='display:block;text-align:left;position:relative;width:40em;margin-left:-20em;left:50%;'>
             Дополнительная информация:
             <br>
@@ -36,10 +46,47 @@
         </div>
         <br><hr>
         <a class="btn" id="ready">Готово</a>
-    </div><center>
-        <div id="container">
-<textarea id="otchet" name="otchet"></textarea></div>
-   <script type="text/javascript">
+    </div>
+<button class="btn btn-primary" id="send" style="display:none;opacity:0.0;">Отправить</button>
+<br>
+<div id="sending" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
+    </center>
+
+<div id="send_panel">
+     
+       <button class="btn btn-primary pull-right" id="mini">Свернуть</button><br>
+      <hr>
+  <div id="who">
+    Кому отправляем:
+    <select id="adresat">
+       <?php 
+       foreach($this->ps as $p){
+           echo "<option>";
+           echo $p->real_name;
+           echo "</option>";
+       }
+       ?>
+       
+    </select><br>
+  
+</div>
+</div>
+<div id="push"></div>
+<div style="display:none;" id="result">
+    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." style="font-weight: normal;">
+  <?php echo $_SESSION['orgname']."<p><b>".$_SESSION['fio']."</b> - <i>".$_SESSION['post']."</i><br>"; ?> 
+    </textarea>
+</div>
+<form id="pform" action="/card/add/" method="POST" style="display:none;">
+    <input type="text" name="who"/>
+    <input type="text" name="from"/>
+    <input type="text" name="karts"/>
+    <input type="text" name="i"/>
+</form>
+<div id="load_editor">
+    <div id="pre">Загрузка...<br><img src="/public/img/ajax-loader.gif"> </div>
+</div>
+ <script type="text/javascript">
        var editing = 0;
        
        $(document).ready(function(){
@@ -57,12 +104,14 @@
             ['NumberedList', 'BulletedList', '-', 'SpecialChar', '-', 'Outdent', 'Indent', 'Blockquote'],
         ],
         // настройка высоты
-        height: 400
+        height: 600,
+        width: 600
        
       
     });
    
 //
+
 $(window).resize(function(){
     if (editing==1){
       $("#ok").click();  
@@ -119,49 +168,53 @@ $("#mini").click(function(){
        })
 
    
-</script>     
-        
-        <br>
-<button class="btn btn-primary" id="send" style="display:none;opacity:0.0;">Отправить</button>
-<br>
-<div id="sending" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
-    </center>
-
-<div id="send_panel">
-     
-       <button class="btn btn-primary pull-right" id="mini">Свернуть</button><br>
-      <hr>
-  <div id="who">
-    Кому отправляем:
-    <select id="adresat">
-       <?php 
-       foreach($this->ps as $p){
-           echo "<option>";
-           echo $p->real_name;
-           echo "</option>";
-       }
-       ?>
-       
-    </select><br>
-  
-</div>
-</div>
-<div id="push"></div>
-<div style="display:none;" id="result">
-    <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." style="font-weight: normal;">
-  <?php echo $_SESSION['orgname']."<p><b>".$_SESSION['fio']."</b> - <i>".$_SESSION['post']."</i><br>"; ?> 
-    </textarea>
-</div>
-<form id="pform" action="/card/add/" method="POST" style="display:none;">
-    <input type="text" name="who"/>
-    <input type="text" name="from"/>
-    <input type="text" name="karts"/>
-    <input type="text" name="i"/>
-</form>
-<div id="load_editor">
-    <div id="pre">Загрузка...<br><img src="/public/img/ajax-loader.gif"> </div>
-</div>
+</script>  
 <style>
+    .menu{
+        position:fixed;
+        top:50px;
+      
+        
+        
+        left:50%;
+        margin-left:-450px; 
+      
+     
+    }
+    .menu .topmenu{
+        border:1px solid grey;
+        border-radius: 10px;
+        z-index:6;
+        width:900px;
+        padding:5px;
+        background:url('/public/img/mbg.png') repeat-x;
+    }
+    .menu #functions{
+    
+      
+    }
+    .menu #functions #inner{
+           background: rgba(205,205,205,0.7);
+       border-radius:10px;
+             max-height: 600px;
+             overflow:auto;
+        /*  border-left:1px solid grey;
+           border-right:1px solid grey;
+            border-bottom: 1px solid grey;
+          */ 
+           
+    }
+    
+    .menu #functions ul li ul li a{
+        color:black;
+    }
+  
+    
+    textarea{
+    background:white;
+    
+    }
+    
     #ok{
         height:20px;
         background:#0066cc;
@@ -188,6 +241,7 @@ $("#mini").click(function(){
         
     }
     #load_editor{
+      
          position: absolute;
        top:0px;
        left:0px;
@@ -235,7 +289,7 @@ $("#mini").click(function(){
         cursor: move;
     }
     #cke_otchet{
-        
+    /*    
         position:fixed;
         top:100%;
         margin-top:-550px;
@@ -243,7 +297,7 @@ $("#mini").click(function(){
         left:100%;
         width:30%;
         margin-left:-30%;
-     
+     */
     }
   
     #pbar{
@@ -307,7 +361,7 @@ $("#mini").click(function(){
         display:block;
        
         height:25px;
-        width:100%;
+        width:90%;
         padding-left:5px;
         border-radius: 5px;
             background-color:transparent;
@@ -336,7 +390,7 @@ $("#mini").click(function(){
     }
     ul li ul li a{
         display:block;
-        width:100%;
+        width:90%;
         color:black;
         font-weight:bold;
         padding-left:5px;
