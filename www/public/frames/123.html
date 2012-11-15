@@ -13,15 +13,14 @@
     <body>
         <div id="file_holder" style="text-align:center;">
 <form action="upload.php" method="post" enctype="multipart/form-data" id="uf" >  
-
-<p><label for="userfile">Выберите файлы для загрузки:</label>
-    <input id="userfile" class="input" type="file" multiple onchange="$('#f1').html('Файлы выбраны');" name="userfile[]" style="display:none;" /></p>
-<div class="fname" id="f1"></div><a id="f1" class="btn" onclick="$('#userfile').click();">Выбрать</a>
+<label for="userfile" style="font-size:60%;color:grey;">Разрешенные расширения:GIF,JPEG,PNG,PDF)</label>
+    <input id="userfile" class="input" type="file" onchange="$('#f1').html($(this).val());" name="userfile[]" style="display:none;" />
+<div class="fname" id="f1"></div><a id="f1" class="btn" onclick="$('#userfile').click();$('#goload').show();$(this).attr('disabled','1')">Выбрать</a>
 
 <div id="errormes"></div>  
 
 <br>
-<input type="submit" onclick="window.parent.$('#loading').show();" value="Загузить" class="btn btn-primary" />
+<input style="display:none;" type="submit" id="goload" onclick="window.parent.$('#loading').show();" value="Загузить" class="btn btn-primary" />
 
 </form>
 </div>

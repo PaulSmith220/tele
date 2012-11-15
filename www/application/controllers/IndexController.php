@@ -67,7 +67,8 @@ class IndexController extends Zend_Controller_Action
            $uu = $us_mdl->fetchAll("id=".$c->init);
            foreach($uu as $u){
                   list($a,$aa)= explode(" ",$c->date);
-           $inlist[] = "<a href='/card/watch?v=".$c->id."'>".($b[1]).$c->id.") ".$u->real_name." (".$a.")".($b[2])." </a>"; 
+                  $nm = ((($c->id)));
+           $inlist[] = "<a href='/card/watch?v=".$c->id."'>#".($b[1]).$nm." ".$u->real_name." (".$a.")".($b[2])." </a>"; 
            }
        }
        

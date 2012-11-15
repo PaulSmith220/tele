@@ -27,7 +27,8 @@ class CardController extends Zend_Controller_Action
        $this->view->menu .="<a id='op' act='top' onme='0'  class='btn btn-primary'>Операции</a>";
        $this->view->menu .="<a id='rek' act='top' onme='0'  class='btn btn-primary'>Рекомендации</a>";
        $this->view->menu .="<a id='dis' act='top' onme='0'  class='btn btn-primary'>Выписан</a>";
-       $this->view->menu .="<a id='atdis' act='top' onme='0'  class='btn btn-primary'>При выписке</a></center>";
+       $this->view->menu .="<a id='atdis' act='top' onme='0'  class='btn btn-primary'>При выписке</a>";
+       $this->view->menu .="<a id='dop' act='top' onme='0'  class='btn btn-primary'>Дополнительно</a></center>";
      //Авторицация есть, делаем что хотим
        $post = $this->getParam("v");
      
@@ -81,10 +82,10 @@ class CardController extends Zend_Controller_Action
      $this->view->content .= "</ul>";
        //Далее выводи анамнез
        
-         $this->view->content .= "<ul style='display:none' id='anam'><li><center><textarea  id='anamnesis' placeholder='Анамнез в свободной форме'>
+         $this->view->content .= "<ul style='display:none' id='anam'><li><textarea  id='anamnesis' placeholder='Анамнез в свободной форме'>
 1. Пол:
 2. Возраст: 
-3. Причина обращения:</textarea></center></li></ul>"; 
+3. Причина обращения:</textarea></li></ul>"; 
        
       // Объективно:
          $mobj = new Model_Obj(); 

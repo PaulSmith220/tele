@@ -94,7 +94,9 @@
 <? } ?>
                 <div class="navbar-inner" >
                     <div class="container" style="width: auto">
-                        <div class="pull-left" style="font-size:18px;color:white;padding-top:10px;">Телемедицина 
+                        <div class="pull-left" style="font-size:18px;color:white;padding-top:10px;">
+                            <img src="/public/img/favicon.png" width="32" style="margin-top:-6px;" />
+                            Телемедицина 
                         <?php if (isset($_SESSION['login'])){ 
                             $_SESSION['me'] = $_SESSION['login'];
                             echo " - ".$_SESSION['fio']." (".$_SESSION['login'].") - ".$_SESSION['post'];} ?></div>

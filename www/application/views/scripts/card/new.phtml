@@ -4,60 +4,36 @@
 <div id="functions">
     <div id="inner">
     <?= $this->content ?>
+        <ul id="dop" style="display:none;">
+            <li>
+            <textarea id="dop" class="dp" style="width:95%;height: 200px;margin-top:20px;" placeholder="Введите ваши комментарии"></textarea>
+            </li>
+        </ul>
     </div>
 
 </div>
 
 </div>
 
-<div style="height:100px;"></div>
+<div id="zap" style="height:100px;"></div>
 <center>
     <input id="from" style="display:none;" value="<?php echo $_SESSION['login']; ?>" />
 
 
 <div>
-    <input type="checkbox" id="poly_check" name="poly_check" checked="1" /> <label style="display:inline;" id="lab_check" for="poly_check">Включить в отчет Шкалу оценки Полиорганной дисфункции</label>   
+    <input type="checkbox" id="poly_check" name="poly_check"  /> <label style="display:inline;" id="lab_check" for="poly_check">Включить в отчет Шкалу оценки Полиорганной дисфункции</label>   
 </div>
- 
+    <br>
     </center>
 
 <center>
         <div id="container">
-<textarea id="otchet" name="otchet"></textarea></div>
-     
-        
-        <br>
-            <div id="additions">
-        <div style='display:block;text-align:left;position:relative;width:40em;margin-left:-20em;left:50%;'>
-            Дополнительная информация:
-            <br>
-            <textarea id="dop" style="width:40em;height:10em;"></textarea>
-           
-        </div><br>
-          <div style='display:block;position:relative;width:300px;margin-left:-150px;left:50%;'>
-          
-              
-            
-              <iframe id="fr" src="/public/frames/123.html" width="300" height="160" hspace="10" vspace="10" align="center" >
-Ваш браузер не поддерживает плавающие фреймы!
-</iframe> 
-  <div id="loading" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>            
-              
-        </div>
-        <br><hr>
-        <a class="btn" id="ready">Готово</a>
-    </div>
-<button class="btn btn-primary" id="send" style="display:none;opacity:0.0;">Отправить</button>
-<br>
-<div id="sending" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
-    </center>
+            <table><tr><td valign="top">
+ <div id="send_panel">
+     <textarea id="adr" style="display:none;"></textarea>
 
-<div id="send_panel">
-     
-       <button class="btn btn-primary pull-right" id="mini">Свернуть</button><br>
-      <hr>
   <div id="who">
-    Кому отправляем:
+    Кому отправляем:<br>
     <select id="adresat">
        <?php 
        foreach($this->ps as $p){
@@ -70,7 +46,50 @@
     </select><br>
   
 </div>
-</div>
+<p><br>
+    <a class="btn" id="byhand" style="text-shadow:none;">Ручная правка</a><a id="nohand" class="btn btn-primary" style="display:none;">Отмена</a>
+     <p>
+         Приложить файлы:<br>
+        <div style='display:block;'>
+
+              <iframe id="fr" src="/public/frames/123.html" width="200" height="150"  >
+Ваш браузер не поддерживает плавающие фреймы!
+</iframe> 
+  <div id="loading" style="display:none;"><img width="100" src="/public/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>            
+  <div>
+  <ul id="flist" style="list-style:none;">
+      
+  </ul>
+        </div>
+        </div>
+     <center>
+         <div>
+      <button class="btn btn-primary" id="send" >Отправить</button>
+      </div>
+     </center>
+</div> 
+    <br>
+ 
+</td>
+<td>
+<textarea id="otchet" name="otchet"></textarea></div>
+</td>                
+                </tr>
+</table>
+        
+        <br>
+            <div id="additions">
+        <br>
+     
+        <br><hr>
+        <a class="btn" id="ready">Готово</a>
+    </div>
+
+<br>
+<div id="sending" style="display:none;"><img src="/public/img/ajax-loader.gif" alt="Loading"/> Идет отправка...</div> 
+    </center>
+
+
 <div id="push"></div>
 <div style="display:none;" id="result">
     <textarea placeholder="Здесь будет отображаться результат. Выберите необходимые поля." style="font-weight: normal;">
@@ -90,7 +109,7 @@
        var editing = 0;
        
        $(document).ready(function(){
-           
+           dw =  $(document).width()/2;
              CKEDITOR.replace('otchet',
     {
         // настройка тулбара
@@ -105,7 +124,7 @@
         ],
         // настройка высоты
         height: 600,
-        width: 600
+        width: dw
        
       
     });
@@ -170,6 +189,13 @@ $("#mini").click(function(){
    
 </script>  
 <style>
+    #flist{
+      padding-left:5px;
+    }
+    #flist a{
+        font-size: 10px;
+    }
+   
     .menu{
         position:fixed;
         top:50px;
@@ -185,16 +211,18 @@ $("#mini").click(function(){
         border:1px solid grey;
         border-radius: 10px;
         z-index:6;
-        width:900px;
+        max-width:900px;
         padding:5px;
         background:url('/public/img/mbg.png') repeat-x;
     }
     .menu #functions{
-    
+    display:block;
       
     }
     .menu #functions #inner{
-           background: rgba(205,205,205,0.7);
+         display:block;
+         width:300px;
+           background: rgba(255,255,255,0.8);
        border-radius:10px;
              max-height: 600px;
              overflow:auto;
@@ -222,9 +250,12 @@ $("#mini").click(function(){
         font-weight: bold;
         padding: 5px;
     }
+    #cke_otchet{
+    
+    }
     #send_panel{
-        position:fixed;
-        display:none;
+     
+     
         padding:10px;
         background:lightgrey url('/public/img/grid.png');
         border:1px solid grey;
@@ -233,9 +264,7 @@ $("#mini").click(function(){
     #ready{
         display:none;
     }
-    #send{
-        display:none;
-    }
+ 
     .ln a{
         curor:pointer;
         
@@ -364,7 +393,7 @@ $("#mini").click(function(){
         width:90%;
         padding-left:5px;
         border-radius: 5px;
-            background-color:transparent;
+           
          -webkit-transition:  background-color 0.5s linear;
      -moz-transition:  background-color  0.5s linear;
        -o-transition: background-color 0.5s linear;
@@ -385,6 +414,10 @@ $("#mini").click(function(){
         margin-top:0px;
         
     }
+    ul li ul{
+        list-style-image:url('/public/img/list.png');
+        list-style-position:  outside;
+    }
     ul li ul li{
         margin-left:10px;
     }
@@ -394,7 +427,7 @@ $("#mini").click(function(){
         color:black;
         font-weight:bold;
         padding-left:5px;
-           background-color:transparent;
+         background-color:rgba(255,255,255,0.1);
          -webkit-transition:  background-color 0.5s linear;
      -moz-transition:  background-color  0.5s linear;
        -o-transition: background-color 0.5s linear;
@@ -437,8 +470,8 @@ $("#mini").click(function(){
     }
     #anamnesis{
         margin-top:20px;
-        margin-left:40px;
-        width:300px;
+       
+       width:95%;
         height: 200px;
         border-radius: 5px;
        position:relative;

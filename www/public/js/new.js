@@ -38,6 +38,36 @@ window.onload=function(){
       
    });
   
+  
+  $("#byhand").click(function(){
+     $("#cke_top_otchet").slideDown(500);
+     $(".menu").fadeOut(500);
+     $("#nohand").fadeIn(500);
+     $(this).attr('disabled','1');
+      $("#lab_check").fadeOut(500);
+       $("#poly_check").fadeOut(500);
+       $("#zap").slideUp(500);
+        CKEDITOR.instances.otchet.setReadOnly(false);
+  });
+  $("#nohand").click(function(){
+      if (confirm("Внимание!\nВсе внесенные вручную изменения будут потеряны!\nПродолжить?")){
+    $("#byhand").removeAttr('disabled');
+    $(this).fadeOut(500);
+     $("#cke_top_otchet").slideUp(500);
+       $(".menu").fadeIn(500);
+           $("#lab_check").fadeIn(500);
+       $("#poly_check").fadeIn(500);
+       $("#zap").slideDown(500);
+        CKEDITOR.instances.otchet.setReadOnly(true);
+      }
+      
+  });
+  
+  
+  
+  
+  
+  
     
     /* 
      $('#comps').click(function(){
@@ -67,6 +97,19 @@ window.onload=function(){
      });
      
      $("#anamnesis").change(function(){
+        $(this).css('color','darkgreen'); 
+        $(this).attr('changed','1');
+        CKEDITOR.instances.otchet.setReadOnly(false);
+        $("#ready").click();
+        clearTimeout(s);
+          s = setTimeout('CKEDITOR.instances.otchet.setReadOnly(true)',2000);
+         $(this).css('text-shadow',' 0px 0px 2px blue'); 
+     
+    
+
+    
+     });
+       $("#dop.dp").change(function(){
         $(this).css('color','darkgreen'); 
         $(this).attr('changed','1');
         CKEDITOR.instances.otchet.setReadOnly(false);
@@ -235,22 +278,22 @@ ready_send = 0;
        rr = /\n/g;
         an = $("#anamnesis").val().replace(rr,"<br>");
         if ($("#anamnesis").attr('changed')=='1'){
-            anamnesis+="<b>Анамнез:</b><br>";
+            anamnesis+="<br><b>Анамнез:</b><br>";
             anamnesis+='<i>'+an+'</i>';
             anamnesis+="<br>";
-            anamnesis += "<p>"; 
+            anamnesis += "<br>"; 
         }
        
         
         
         i=0;
         r = '';
-        $("ul#obj_ul a.1").each(function(){
+        $("ul#obj a.1").each(function(){
             i++;
             r+='<font color=green>'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
         });
          if (i>0) objectively+="<b>Объективно:</b> <br>"+r;
-        objectively += "<p>"; 
+        objectively += "<br>"; 
         
          i=0;
         r = '';
@@ -259,7 +302,7 @@ ready_send = 0;
             r+='<font color=blue>'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
         });
          if (i>0) neurostate+="<b>Невростатус:</b> <br>"+r;
-        neurostate += "<p>"; 
+        neurostate += "<br>"; 
         //Local
           i=0;
         r = '';
@@ -312,8 +355,8 @@ ready_send = 0;
         //////////////////////
         rr = /\n/g;
       
-       if($("#dop").val()!='')
-        dopinfo+="<b>Дополнитеьная информация:</b> <br>"+$("#dop").val().replace(rr,"<br>")+"<p>";
+       if($("#dop.dp").val()!='')
+        dopinfo+="<b>Дополнитеьная информация:</b> <br>"+$("#dop.dp").val().replace(rr,"<br>")+"<p>";
         r='';
         i=0;
         res = header + complaints + anamnesis + objectively + neurostate + localstate + healing + operations + recomendations + out + atout +dopinfo+ polyorg;
@@ -375,14 +418,45 @@ abc = (CKEDITOR.instances['otchet'].getData());
     //      $("#sending").hide();
      //   alert(data);
      //});
+     kpic = '';
+     ik=0;
+     tek='';
+     $("#flist li").each(function(){
+        tek=$(this).children('a').html();
+         if(tek.substring(tek.lastIndexOf('.')+1,tek.length).toLowerCase()=='pdf'){
+     kpic+= "<br><a target=_blank href='/public/upload_pdf/"+tek+"'><img width='32' src='/public/img/pdf.ico' />"+tek+"</a><br>";
+
+ }else if(tek.substring(tek.lastIndexOf('.')+1,tek.length).toLowerCase()=='PDF'){
+      kpic+= "<br><a target=_blank href='/public/upload_pdf/"+tek+"'><img width='32' src='/public/img/pdf.ico' />"+tek+"</a><br>";
+}else {
+     kpic+= "<br><img width='32' src='/public/upload/"+tek+"_thumb.jpg' /><a class='simg'>"+tek+"</a><div style='display:none;font-size:70%;'> Нажмите на картинку,чтобы скачать<br><a href='/public/upload/load.php?f="+tek+".jpg'><img title='Скачать' src='/public/upload/"+tek+".jpg'/></a></div><br>";
+}
+        
+        
+        
+     });
+     
+     
     $("#pform input[name=who]").val($("select#adresat").val().trim());
     $("#pform input[name=from]").val($("#from").val().trim());
-    $("#pform input[name=karts]").val($("#kart").val().trim());
+    $("#pform input[name=karts]").val(kpic.trim());
     $("#pform input[name=i]").val(bcd);
      $("#pform").submit();
      
      });
     
-     
+$("#adr").click(function(){
+    s = $(this).html();
+ list = '';
+ m = s.split('|');
+ l = m.length;
+ for (i=1;i<=l-1;i++){
+     list+="<li><img alt='X' width=16 style='cursor:pointer;' src='/public/img/del.png'><a>"+m[i]+"</a></li>";
+ }
+ $("#flist").html(list);
+})  ;   
+$("#flist li img").live('click',function(){
+  $(this).parent().remove(); 
+});
 
  })
