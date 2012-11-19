@@ -1,4 +1,4 @@
-
+ <script type="text/javascript" src="/public/js/g-loader.js"></script>
 <div class="menu">
 <div class="topmenu">  <?= $this->menu ?></div>
 <div id="functions">
@@ -28,7 +28,7 @@
 
 <center>
         <div id="container">
-            <table><tr><td valign="top">
+            <table><tr><td valign="top" width="200">
  <div id="send_panel">
      <textarea id="adr" style="display:none;"></textarea>
 
@@ -50,11 +50,10 @@
     <a class="btn" id="byhand" style="text-shadow:none;">Ручная правка</a><a id="nohand" class="btn btn-primary" style="display:none;">Отмена</a>
      <p>
          Приложить файлы:<br>
-        <div style='display:block;'>
-
-              <iframe id="fr" src="/public/frames/123.html" width="200" height="150"  >
-Ваш браузер не поддерживает плавающие фреймы!
-</iframe> 
+        <div style='display:block; max-width:200px;'>
+  <div id="load_ul" style="width:190px;"></div>
+          <center>  <button class="lbtn" id="load_button"> </button></center><br>
+         
   <div id="loading" style="display:none;"><img width="100" src="/public/img/ajax-loader.gif" alt="Loading"/> Идет загрузка...</div>            
   <div>
   <ul id="flist" style="list-style:none;">
@@ -189,6 +188,29 @@ $("#mini").click(function(){
    
 </script>  
 <style>
+        .lbtn{
+        border:0;
+        display:block;
+        width:30px;
+        height:30px;
+        background-color: red;
+        background: url('/public/img/add.png');
+        cursor:pointer;
+    }
+    .lbtn:hover{
+        
+         background: url('/public/img/add_h.png');
+    }
+   .lbtn:active{
+         background: url('/public/img/add.png');
+    } 
+    #load_ul #minus{
+        display:inline-block;
+        width:10px;
+        height:10px;
+        background:url('/public/img/minus.png');
+        margin-right:5px;
+    }
     #flist{
       padding-left:5px;
     }
@@ -221,15 +243,17 @@ $("#mini").click(function(){
     }
     .menu #functions #inner{
          display:block;
-         width:300px;
+           width:300px;
+    
            background: rgba(255,255,255,0.8);
-       border-radius:10px;
+       border-radius:0px 0px 10px 10px;
+       margin-left:10px;
              max-height: 600px;
              overflow:auto;
-        /*  border-left:1px solid grey;
-           border-right:1px solid grey;
+       /*   border-left:1px solid grey;
+         /  border-right:1px solid grey;
             border-bottom: 1px solid grey;
-          */ 
+         */ 
            
     }
     

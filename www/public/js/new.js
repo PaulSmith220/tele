@@ -1,17 +1,43 @@
  var s;
+ 
 window.onload=function(){
    //  
  setTimeout('$("#cke_top_otchet").hide();$("#load_editor").fadeOut(500);',3000);
 } 
+
+
+
  $(document).ready(function(){
+/*
+    $(document).live('click',function (e) {
+if ($(e.target).attr('itis')!='menu' && $(e.target).attr('id')!='ready'){
+
     
-   $('a[act=top]').click(function(){
+    $('ul').each(function(){
+        if($(this).attr('class')!=''){
+        $(this).slideUp(500);
+ 
+        }
+});
+
+}
+    
+    });
+   
+*/
+    
+    
+    
+   $('a[act=top]').live('click',function(){
        
+    
+      
         $('a[act=top]').each(function(){
            // $(this).attr('onme','0');
              $(this).css('font-weight','normal'); 
         });
        
+       of_left = $(this).offset();
         a = $(this).attr('id');
        if ($(this).attr('onme')=='1'){
              $(this).attr('onme','0');
@@ -27,11 +53,15 @@ window.onload=function(){
   
      $('ul').each(function(){
        id = $(this).attr('id');
-       if (a!=id){
-           $('ul#'+id).slideUp(500);
+       if ((a!=id ) ){
+           if((id!='filelist'))
+           $('ul#'+id).slideUp(200);
           
            
        }else{
+          
+            
+           $('.menu #functions #inner').offset({left:of_left.left});
             $('ul#'+a).slideToggle(500);
        }
      });
@@ -313,8 +343,81 @@ ready_send = 0;
          if (i>0) localstate+="<b>Локальный статус:</b> <br>"+r;
         localstate += "<p>"; 
         //////////////////////
+       //////////////////////
+        //Healing
+         i=0;
+        r = '';
+        lech = '';
+        $("ul#lech a.1").each(function(){
+            
+            i++;
+           
+            r+='<font color=green>'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
+        });
+         if (i>0) lech+="<b>Лечение:</b> <br>"+r;
+        lech += "<p>"; 
+        
+        
+        
+        
+        
+        
+        
+        //////////////////////
+        //
+        //Operations
+         i=0;
+        r = '';
+        operations = '';
+        $("ul#operations a.1").each(function(){
+            
+            i++;
+           
+            r+='<font color=brown>'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
+        });
+         if (i>0) operations+="<b>Операции:</b> <br>"+r;
+        operations += "<p>"; 
+        
+        
+        
+        
+        
+        
+        
+        //////////////////////
+         //Recomendations
+         i=0;
+        r = '';
+        recomendations = '';
+        $("ul#recomendations a.1").each(function(){
+            
+            i++;
+           
+            r+='<font color="#009ce1">'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
+        });
+         if (i>0) recomendations+="<b>Рекомендации:</b> <br>"+r;
+        recomendations += "<p>"; 
+        
+   
+        //////////////////////
+        //
+            //Discharge
+         i=0;
+        r = '';
+        out = '';
+        $("ul#discharge a.1").each(function(){
+            
+            i++;
+           
+            r+='<font color="#c32955">'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
+        });
+         if (i>0) out+="<b>Выписан:</b> <br>"+r;
+        out += "<p>"; 
+        
+   
+        //////////////////////
         //PolyOrg
-         
+     
         nn = '<table>';
         $("ul#poly a.0").each(function(){
            
@@ -332,34 +435,17 @@ ready_send = 0;
        pr = (ball/24)*100;
        pr_bar = '<div style="display:inline-block;overflow:hidden;margin-left:20px;width:100px;border-radius:5px;height:10px;border:1px solid grey;background:rgb(0,100,0);text-align: left;" id="pbar"><div id="pr" style="border-right:4px solid white;background:rgb(150,0,0);height:10px;width:'+pr+'%;"></div> </div>';
          polyorg+="<div><b>Полиорганная дисфункция (SOFA):<u><font color=red size=2> "+ ball +"</font> "+ sk +"</u></b> "+ pr_bar +"</div><br>"+nn+"</table>";
-       
+     
       if($("#poly_check").attr("checked")==undefined) polyorg = '';
        
-        //////////////////////
-        //Healing
-         i=0;
-        r = '';
-        $("ul#heal a.1").each(function(){
-            i++;
-            r+='<font color=green>'+$(this).attr('title')+':</font> '+$(this).html()+"<br>";
-        });
-         if (i>0) objectively+="<b>Лечение:</b> <br>"+r;
-        objectively += "<p>"; 
         
-        
-        
-        
-        
-        
-        
-        //////////////////////
         rr = /\n/g;
       
        if($("#dop.dp").val()!='')
         dopinfo+="<b>Дополнитеьная информация:</b> <br>"+$("#dop.dp").val().replace(rr,"<br>")+"<p>";
         r='';
         i=0;
-        res = header + complaints + anamnesis + objectively + neurostate + localstate + healing + operations + recomendations + out + atout +dopinfo+ polyorg;
+        res = header + "<br>" + complaints + anamnesis + objectively + neurostate + localstate + lech + operations + recomendations + out + atout +dopinfo+ polyorg;
      res+='<hr> <br>';   
         
          var iFrameDOM = $("#fr").contents();
@@ -421,15 +507,15 @@ abc = (CKEDITOR.instances['otchet'].getData());
      kpic = '';
      ik=0;
      tek='';
-     $("#flist li").each(function(){
-        tek=$(this).children('a').html();
+     $("#filelist #flist_item[no='0']").each(function(){
+        tek=$(this).attr('fname');
          if(tek.substring(tek.lastIndexOf('.')+1,tek.length).toLowerCase()=='pdf'){
-     kpic+= "<br><a target=_blank href='/public/upload_pdf/"+tek+"'><img width='32' src='/public/img/pdf.ico' />"+tek+"</a><br>";
+     kpic+= "<br><a target=_blank href='/public/upload/files/"+tek+"'><img width='32' src='/public/img/pdf.ico' />"+tek+"</a><br>";
 
  }else if(tek.substring(tek.lastIndexOf('.')+1,tek.length).toLowerCase()=='PDF'){
-      kpic+= "<br><a target=_blank href='/public/upload_pdf/"+tek+"'><img width='32' src='/public/img/pdf.ico' />"+tek+"</a><br>";
+      kpic+= "<br><a target=_blank href='/public/upload/files/"+tek+"'><img width='32' src='/public/img/pdf.ico' />"+tek+"</a><br>";
 }else {
-     kpic+= "<br><img width='32' src='/public/upload/"+tek+"_thumb.jpg' /><a class='simg'>"+tek+"</a><div style='display:none;font-size:70%;'> Нажмите на картинку,чтобы скачать<br><a href='/public/upload/load.php?f="+tek+".jpg'><img title='Скачать' src='/public/upload/"+tek+".jpg'/></a></div><br>";
+     kpic+= "<br><img width='32' src='/public/upload/thumbs/"+tek+"_thumb.jpg' /><a class='simg'>"+tek+"</a><div style='display:none;font-size:70%;'> Нажмите на картинку,чтобы скачать<br><a href='/public/upload/load.php?f="+tek+".jpg'><img title='Скачать' src='/public/upload/files/"+tek+".jpg'/></a></div><br>";
 }
         
         

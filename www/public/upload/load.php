@@ -2,7 +2,7 @@
 
 $f = htmlspecialchars($_GET['f']);
 
-$rFile = @fopen($f, 'r');
+$rFile = @fopen('files/'.$f, 'r');
 $rOutput = fopen('php://output', 'w');
 if($rFile)
 {
