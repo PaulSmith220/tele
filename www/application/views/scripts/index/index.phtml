@@ -45,6 +45,14 @@
         display:block;
         width:100%;
     }
+    #likbez{
+        display:none;
+        margin-top:50px;
+        background:white;
+        padding:20px;
+      border:2px solid #81caf8;
+       border-radius: 10px;
+    }
 </style>
 
 
@@ -63,7 +71,8 @@ for ($i=0;$i<=20;$i++){
 ?>   <div id="popup_help">
       
         <div id="cont">
-        Для начала работы с системой,<br> выберите один из разделов справа.
+        Для начала работы с системой,<br> выберите один из разделов справа.<br>
+        <center><a href="#" onclick="likbez();">[Открыть полное руководство]</a></center>
         </div>
           <div id="arrow"></div>
     </div>
@@ -78,7 +87,11 @@ for ($i=0;$i<=20;$i++){
 </ul>
 <p>
     <br><br>
-   <center> <a href="#" class="btn"  onclick="$('#popup_help').stop().show().animate({'opacity':0.9},1000).animate({'opacity':1.0},3000).animate({'opacity':0.0},1000);">Как начать работу?</a>
+   <center> <a href="#" class="btn"  onclick="$('#popup_help').stop().show().animate({'opacity':0.9},1000).animate({'opacity':1.0},3000);">Как начать работу?</a>
+   
+       <div id="likbez"></div>
+   
+   
    </center>
  
 

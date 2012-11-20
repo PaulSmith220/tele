@@ -1,7 +1,7 @@
   <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
 <?php
 $num = htmlspecialchars($_POST['num']);
- $filename = date("Y_m_d_h_i")."_".($_FILES['file']['name']);
+ $filename = ($_FILES['file']['name']);
  
   $max_filesize = 2097152; // Максимальный размер файла в БАЙТАХ.
      $allowed_filetypes = array('.jpg','.jpeg','.gif','.png','.PNG','.JPG','.JPEG','.GIF','.pdf','.PDF'); 
@@ -12,7 +12,8 @@ $num = htmlspecialchars($_POST['num']);
     
 $dir = '../upload/files/';
 
-      ;
+  $filename = $_SESSION['login']."_".date("_Y_m_d_h_i_s")."_".$ext;
+  
  if (move_uploaded_file($_FILES['file']['tmp_name'],$dir.$filename )){
       $op = 1;
             resize($filename);
@@ -62,7 +63,7 @@ $dir = '../upload/files/';
            
            }     
        
-       
+
        
 ?>
   
