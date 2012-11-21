@@ -1,6 +1,22 @@
 <?php
 
 
+function getRealIpAddr()
+{
+  if (!empty($_SERVER['HTTP_CLIENT_IP']))
+  {
+    $ip=$_SERVER['HTTP_CLIENT_IP'];
+  }
+  elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+  {
+    $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+  }
+  else
+  {
+    $ip=$_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
+}
 
 class CardController extends Zend_Controller_Action
 {
@@ -372,7 +388,7 @@ $mc->insert($data);
   $log_m = new Model_Log();
           $data = array(
      'text' => 'Пользователь '.$from."(".$from1.") отправил карту ползователю ".$who."(".$who1.")<br>Id:".($cnt+1)."<br>Прикрепления:".$karts."<br>Логин в сессии: ".$_SESSION['login'],
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => getRealIpAddr(),
         );
 
       $log_m->insert($data);
@@ -435,7 +451,7 @@ foreach($mset as $m){
   }
           $data = array(
      'text' => 'Пользователь '.$loginuu.'('.$m->adr.") просмотрел консультацию ".$num.", полученную от ".$frnuu."(".$from.")<br>Логин в сессии: ".$_SESSION['login'],
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => getRealIpAddr(),
         );
 
       $log_m->insert($data);
@@ -534,7 +550,7 @@ $this->view->content = "Консультация перенаправлена.<b
      'text' => 'Пользователь '.$loginuu.'('.$me.") перенаправил консультацию ".$card." на пользователя ".$to_name."(".$to.")
 <br>Комментарий:".($re_com)."         
 <br>Логин в сессии: ".$_SESSION['login'],
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => getRealIpAddr(),
         );
 
       $log_m->insert($data);

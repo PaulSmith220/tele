@@ -1,4 +1,22 @@
 <?php
+
+function getRealIpAddr()
+{
+  if (!empty($_SERVER['HTTP_CLIENT_IP']))
+  {
+    $ip=$_SERVER['HTTP_CLIENT_IP'];
+  }
+  elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+  {
+    $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+  }
+  else
+  {
+    $ip=$_SERVER['REMOTE_ADDR'];
+  }
+  return $ip;
+}
+
 class AuthController extends Zend_Controller_Action
 {
  private $log_m;
@@ -20,7 +38,7 @@ Zend_Registry::set('staticSalt', $staticSalt);
          $log_m = new Model_Log();
           $data = array(
      'text' => 'Вышел пользователь '.$_SESSION['login'],
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => getRealIpAddr(),
         );
 
       $log_m->insert($data);
@@ -61,7 +79,7 @@ Zend_Registry::set('staticSalt', $staticSalt);
                   $log_m = new Model_Log();
           $data = array(
      'text' => 'Авторизовался пользователь '.$_SESSION['login'],
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => getRealIpAddr(),
         );
 
       $log_m->insert($data);
@@ -74,7 +92,7 @@ Zend_Registry::set('staticSalt', $staticSalt);
                   $log_m = new Model_Log();
           $data = array(
      'text' => 'Неудачная попытка авторизации. Переданный логин: '. htmlspecialchars($loginForm->getValue('username'))." , пароль: ".  htmlspecialchars($loginForm->getValue('password')),
-            'ip' => $_SERVER['REMOTE_ADDR'],
+            'ip' => getRealIpAddr(),
         );
 
       $log_m->insert($data);
